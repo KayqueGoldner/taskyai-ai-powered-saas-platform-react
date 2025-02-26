@@ -13,17 +13,23 @@ import { HomePage } from "@/pages/home-page";
  */
 import { RootLayout } from "@/layouts/root-layout";
 
+/**
+ * types
+ */
+import type { RouteObject } from "react-router";
+
+const rootRouteChildren: RouteObject[] = [
+  {
+    index: true,
+    element: <HomePage />,
+  },
+];
+
 const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
-    children: [
-      {
-        index: true,
-        path: "/",
-        element: <HomePage />,
-      },
-    ],
+    children: rootRouteChildren,
   },
 ]);
 
