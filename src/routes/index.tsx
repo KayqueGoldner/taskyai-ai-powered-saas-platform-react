@@ -14,6 +14,11 @@ import { HomePage } from "@/pages/home-page";
 import { RootLayout } from "@/layouts/root-layout";
 
 /**
+ * error boundaries
+ */
+import { RootErrorBoundary } from "@/pages/root-error-boundary";
+
+/**
  * types
  */
 import type { RouteObject } from "react-router";
@@ -30,6 +35,7 @@ const router = createBrowserRouter([
     path: "/",
     element: <RootLayout />,
     children: rootRouteChildren,
+    errorElement: <RootErrorBoundary />,
   },
 ]);
 
