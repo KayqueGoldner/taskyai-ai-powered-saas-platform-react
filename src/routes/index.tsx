@@ -7,6 +7,7 @@ import { createBrowserRouter } from "react-router";
  * pages
  */
 import { HomePage } from "@/pages/home-page";
+import { RegisterPage } from "@/pages/register-page";
 
 /**
  * layouts
@@ -27,6 +28,10 @@ const rootRouteChildren: RouteObject[] = [
   {
     index: true,
     element: <HomePage />,
+  },
+  {
+    path: "/register",
+    element: <RegisterPage />,
   },
 ];
 
