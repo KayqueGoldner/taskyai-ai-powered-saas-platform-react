@@ -15,6 +15,7 @@ import { AuthSyncPage } from "@/pages/auth-sync-page";
  * layouts
  */
 import { RootLayout } from "@/layouts/root-layout";
+import { AppLayout } from "@/layouts/app-layout";
 
 /**
  * error boundaries
@@ -45,12 +46,19 @@ const rootRouteChildren: RouteObject[] = [
   },
 ];
 
+const appRouteChildren: RouteObject[] = [];
+
 const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
     children: rootRouteChildren,
     errorElement: <RootErrorBoundary />,
+  },
+  {
+    path: "/app",
+    element: <AppLayout />,
+    children: appRouteChildren,
   },
 ]);
 
