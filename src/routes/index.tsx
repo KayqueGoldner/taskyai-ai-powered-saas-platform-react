@@ -10,6 +10,7 @@ import { HomePage } from "@/pages/home-page";
 import { RegisterPage } from "@/pages/register-page";
 import { LoginPage } from "@/pages/login-page";
 import { AuthSyncPage } from "@/pages/auth-sync-page";
+import { InboxPage } from "@/pages/inbox-page";
 
 /**
  * layouts
@@ -46,7 +47,12 @@ const rootRouteChildren: RouteObject[] = [
   },
 ];
 
-const appRouteChildren: RouteObject[] = [];
+const appRouteChildren: RouteObject[] = [
+  {
+    path: "inbox",
+    element: <InboxPage />,
+  },
+];
 
 const router = createBrowserRouter([
   {
