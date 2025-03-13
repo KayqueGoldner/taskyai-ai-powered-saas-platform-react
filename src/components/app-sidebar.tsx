@@ -32,6 +32,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { TaskFormDialog } from "@/components/task-form-dialog";
 
 /**
  * constants
@@ -58,9 +59,11 @@ export const AppSidebar = () => {
             <SidebarMenu>
               {/* task create button */}
               <SidebarMenuItem>
-                <SidebarMenuButton className="!text-primary">
-                  <CirclePlus /> Add task
-                </SidebarMenuButton>
+                <TaskFormDialog>
+                  <SidebarMenuButton className="!text-primary">
+                    <CirclePlus /> Add task
+                  </SidebarMenuButton>
+                </TaskFormDialog>
               </SidebarMenuItem>
 
               {/* sidebar links */}
