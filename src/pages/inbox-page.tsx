@@ -1,3 +1,13 @@
+/**
+ * components
+ */
+import { Head } from "@/components/head";
+
 export const InboxPage = () => {
-  return <div>InboxPage</div>;
+  return (
+    <>
+      <Head title="Inbox - Tasky AI" />
+      Hello World
+    </>
+  );
 };

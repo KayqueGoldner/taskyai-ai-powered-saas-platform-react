@@ -28,6 +28,23 @@ export const TaskFormDialog: React.FC<PropsWithChildren> = ({ children }) => {
   const location = useLocation();
   const fetcher = useFetcher();
 
+  useEffect(() => {
+    const listener = (event: KeyboardEvent) => {
+      if (event.key === "q") {
+        const target = event.target as HTMLElement;
+
+        if (target.localName === "textarea") return;
+
+        event.preventDefault();
+        setOpen(true);
+      }
+    };
+
+    document.addEventListener("keydown", listener);
+
+    return () => document.removeEventListener("keydown", listener);
+  }, []);
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>

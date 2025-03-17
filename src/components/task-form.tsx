@@ -122,6 +122,13 @@ export const TaskForm: React.FC<TaskFormProps> = ({
           placeholder="After finishing the project, take a tour."
           value={taskContent}
           onInput={(e) => setTaskContent(e.currentTarget.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+
+              handleSubmit();
+            }
+          }}
           autoFocus
         />
 

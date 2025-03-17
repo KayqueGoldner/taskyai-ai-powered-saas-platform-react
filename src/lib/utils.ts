@@ -12,6 +12,7 @@ import {
   isTomorrow,
   startOfToday,
 } from "date-fns";
+import { redirect } from "react-router";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -69,4 +70,19 @@ export function getTaskDueDateColorClass(
   if (isTomorrow(dueDate) && !completed) {
     return "text-amber-500";
   }
+}
+
+export function generateID() {
+  return Math.random().toString(36).slice(8) + Date.now().toString(36);
+}
+
+export function getUserId(): string {
+  const clerkUserId = localStorage.getItem("clerkUserId");
+
+  if (!clerkUserId) {
+    redirect("/auth-sync");
+    return "";
+  }
+
+  return clerkUserId;
 }
