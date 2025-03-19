@@ -6,7 +6,7 @@ import { Outlet } from "react-router";
 /**
  * components
  */
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
@@ -16,8 +16,9 @@ export const AppLayout = () => {
       <TooltipProvider delayDuration={500} disableHoverableContent>
         <AppSidebar />
 
-        <SidebarTrigger />
-        <Outlet />
+        <main className="flex-1">
+          <Outlet />
+        </main>
       </TooltipProvider>
     </SidebarProvider>
   );
