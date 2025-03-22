@@ -29,6 +29,11 @@ import { RootErrorBoundary } from "@/pages/root-error-boundary";
 import appAction from "@/routes/actions/app-action";
 
 /**
+ * loaders
+ */
+import inboxTaskLoader from "@/routes/loaders/inbox-loader";
+
+/**
  * types
  */
 import type { RouteObject } from "react-router";
@@ -56,6 +61,7 @@ const appRouteChildren: RouteObject[] = [
   {
     path: "inbox",
     element: <InboxPage />,
+    loader: inboxTaskLoader,
   },
 ];
 

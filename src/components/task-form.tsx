@@ -115,7 +115,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({
   }, [taskContent, onSubmit, formData]);
 
   return (
-    <Card className="focus-within:border-foreground/30">
+    <Card className={cn("focus-within:border-foreground/30", className)}>
       <CardContent className="p-2">
         <Textarea
           className="mb-2 !border-0 p-1 !ring-0"
