@@ -14,12 +14,13 @@ import type { Task } from "@/types";
  * environmental variables
  */
 const APPWRITE_DATABASE_ID = import.meta.env.VITE_APPWRITE_DATABASE_ID;
+const APPWRITE_TASKS_ID = import.meta.env.VITE_APPWRITE_TASKS_ID;
 
 const createTask = async (data: Task) => {
   try {
     return await databases.createDocument(
       APPWRITE_DATABASE_ID,
-      "tasks",
+      APPWRITE_TASKS_ID,
       generateID(),
       { ...data, userId: getUserId() },
     );

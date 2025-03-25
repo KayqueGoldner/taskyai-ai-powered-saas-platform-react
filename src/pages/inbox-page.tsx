@@ -13,6 +13,7 @@ import { Page, PageHeader, PageTitle, PageList } from "@/components/page";
 import { TaskCreateButton } from "@/components/task-create-button";
 import { TaskEmptyState } from "@/components/task-empty-state";
 import { TaskForm } from "@/components/task-form";
+import { TaskCard } from "@/components/task-card";
 
 /**
  * types
@@ -40,7 +41,14 @@ export const InboxPage = () => {
         <PageList>
           {tasks.documents.map(
             ({ $id, content, completed, due_date, project }) => (
-              <div>Task Card</div>
+              <TaskCard
+                key={$id}
+                completed={completed}
+                content={content}
+                dueDate={due_date}
+                id={$id}
+                project={project}
+              />
             ),
           )}
 
