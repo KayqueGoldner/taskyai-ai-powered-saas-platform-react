@@ -9,17 +9,22 @@ import { Outlet } from "react-router";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { Toaster } from "@/components/ui/toaster";
 
 export const AppLayout = () => {
   return (
-    <SidebarProvider>
-      <TooltipProvider delayDuration={500} disableHoverableContent>
-        <AppSidebar />
+    <>
+      <SidebarProvider>
+        <TooltipProvider delayDuration={500} disableHoverableContent>
+          <AppSidebar />
 
-        <main className="flex-1">
-          <Outlet />
-        </main>
-      </TooltipProvider>
-    </SidebarProvider>
+          <main className="flex-1">
+            <Outlet />
+          </main>
+        </TooltipProvider>
+      </SidebarProvider>
+
+      <Toaster />
+    </>
   );
 };
