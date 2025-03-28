@@ -52,13 +52,15 @@ export const InboxPage = () => {
             ),
           )}
 
-          {!showTaskForm ? (
+          {!tasks.total && !showTaskForm && (
             <>
               <TaskCreateButton onClick={() => setShowTaskForm(true)} />
 
               <TaskEmptyState type="inbox" />
             </>
-          ) : (
+          )}
+
+          {showTaskForm && (
             <TaskForm
               mode="create"
               className="mt-1"
