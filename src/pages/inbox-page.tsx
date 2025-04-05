@@ -14,6 +14,7 @@ import { TaskCreateButton } from "@/components/task-create-button";
 import { TaskEmptyState } from "@/components/task-empty-state";
 import { TaskForm } from "@/components/task-form";
 import { TaskCard } from "@/components/task-card";
+import { TaskCardSkeleton } from "@/components/task-card-skeleton";
 
 /**
  * types
@@ -52,13 +53,13 @@ export const InboxPage = () => {
             ),
           )}
 
-          {!tasks.total && !showTaskForm && (
-            <>
-              <TaskCreateButton onClick={() => setShowTaskForm(true)} />
+          {fetcher.state !== "idle" && <TaskCardSkeleton />}
 
-              <TaskEmptyState type="inbox" />
-            </>
+          {!showTaskForm && (
+            <TaskCreateButton onClick={() => setShowTaskForm(true)} />
           )}
+
+          {!tasks.total && !showTaskForm && <TaskEmptyState type="inbox" />}
 
           {showTaskForm && (
             <TaskForm
