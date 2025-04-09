@@ -3,6 +3,7 @@
  */
 import { useState } from "react";
 import { useFetcher, useLoaderData } from "react-router";
+import { startOfToday } from "date-fns";
 
 /**
  * components
@@ -17,11 +18,16 @@ import { TaskCard } from "@/components/task-card";
 import { TaskCardSkeleton } from "@/components/task-card-skeleton";
 
 /**
+ * assets
+ */
+import { CheckCircle2Icon } from "lucide-react";
+
+/**
  * types
  */
 import type { Models } from "appwrite";
 
-export const InboxPage = () => {
+export const TodayTaskPage = () => {
   const [showTaskForm, setShowTaskForm] = useState(false);
   const fetcher = useFetcher();
   const { tasks } = useLoaderData<{
@@ -30,13 +36,19 @@ export const InboxPage = () => {
 
   return (
     <>
-      <Head title="Inbox - Tasky AI" />
+      <Head title="Today - Tasky AI" />
 
-      <TopAppBar title="Inbox" />
+      <TopAppBar title="Today" taskCount={tasks.total} />
 
       <Page>
         <PageHeader>
-          <PageTitle>Inbox</PageTitle>
+          <PageTitle>Today</PageTitle>
+
+          {tasks.total > 0 && (
+            <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
+              <CheckCircle2Icon size={16} /> {tasks.total} tasks
+            </div>
+          )}
         </PageHeader>
 
         <PageList>
@@ -59,12 +71,17 @@ export const InboxPage = () => {
             <TaskCreateButton onClick={() => setShowTaskForm(true)} />
           )}
 
-          {!tasks.total && !showTaskForm && <TaskEmptyState type="inbox" />}
+          {!tasks.total && !showTaskForm && <TaskEmptyState />}
 
           {showTaskForm && (
             <TaskForm
               mode="create"
               className="mt-1"
+              defaultFormData={{
+                content: "",
+                due_date: startOfToday(),
+                project: null,
+              }}
               onCancel={() => setShowTaskForm(false)}
               onSubmit={(formData) => {
                 fetcher.submit(JSON.stringify(formData), {

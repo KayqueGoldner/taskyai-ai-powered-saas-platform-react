@@ -11,6 +11,7 @@ import { RegisterPage } from "@/pages/register-page";
 import { LoginPage } from "@/pages/login-page";
 import { AuthSyncPage } from "@/pages/auth-sync-page";
 import { InboxPage } from "@/pages/inbox-page";
+import { TodayTaskPage } from "@/pages/today-task-page";
 
 /**
  * layouts
@@ -32,6 +33,7 @@ import appAction from "@/routes/actions/app-action";
  * loaders
  */
 import inboxTaskLoader from "@/routes/loaders/inbox-loader";
+import todayTaskLoader from "@/routes/loaders/today-task-loader";
 
 /**
  * types
@@ -62,6 +64,11 @@ const appRouteChildren: RouteObject[] = [
     path: "inbox",
     element: <InboxPage />,
     loader: inboxTaskLoader,
+  },
+  {
+    path: "today",
+    element: <TodayTaskPage />,
+    loader: todayTaskLoader,
   },
 ];
 

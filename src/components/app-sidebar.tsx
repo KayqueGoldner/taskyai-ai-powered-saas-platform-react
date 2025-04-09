@@ -1,7 +1,7 @@
 /**
  * node modules
  */
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 
 /**
  * components
@@ -35,6 +35,11 @@ import {
 import { TaskFormDialog } from "@/components/task-form-dialog";
 
 /**
+ * hooks
+ */
+import { useSidebar } from "@/components/ui/sidebar";
+
+/**
  * constants
  */
 import { SIDEBAR_LINKS } from "@/constants";
@@ -45,6 +50,9 @@ import { SIDEBAR_LINKS } from "@/constants";
 import { CirclePlus, Plus, ChevronRight } from "lucide-react";
 
 export const AppSidebar = () => {
+  const location = useLocation();
+  const { isMobile, setOpenMobile } = useSidebar();
+
   return (
     <Sidebar>
       <SidebarHeader>
@@ -69,7 +77,13 @@ export const AppSidebar = () => {
               {/* sidebar links */}
               {SIDEBAR_LINKS.map((link, index) => (
                 <SidebarMenuItem key={index}>
-                  <SidebarMenuButton asChild>
+                  <SidebarMenuButton
+                    isActive={location.pathname === link.href}
+                    onClick={() => {
+                      if (isMobile) setOpenMobile(false);
+                    }}
+                    asChild
+                  >
                     <Link to={link.href}>
                       <link.icon />
 
