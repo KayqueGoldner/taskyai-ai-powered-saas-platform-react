@@ -13,6 +13,7 @@ import { AuthSyncPage } from "@/pages/auth-sync-page";
 import { InboxPage } from "@/pages/inbox-page";
 import { TodayTaskPage } from "@/pages/today-task-page";
 import { UpcomingTaskPage } from "@/pages/upcoming-task-page";
+import { CompletedTaskPage } from "@/pages/completed-task-page";
 
 /**
  * layouts
@@ -36,6 +37,7 @@ import appAction from "@/routes/actions/app-action";
 import inboxTaskLoader from "@/routes/loaders/inbox-loader";
 import todayTaskLoader from "@/routes/loaders/today-task-loader";
 import upcomingTaskLoader from "@/routes/loaders/upcoming-task-loader";
+import completedTaskLoader from "@/routes/loaders/completed-task-loader";
 
 /**
  * types
@@ -76,6 +78,11 @@ const appRouteChildren: RouteObject[] = [
     path: "upcoming",
     element: <UpcomingTaskPage />,
     loader: upcomingTaskLoader,
+  },
+  {
+    path: "completed",
+    element: <CompletedTaskPage />,
+    loader: completedTaskLoader,
   },
 ];
 

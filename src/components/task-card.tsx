@@ -122,17 +122,19 @@ export const TaskCard: React.FC<TaskCardProps> = ({
             onClick={async () => {
               await handleTaskComplete(!task.completed);
 
-              toast({
-                title: "1 task completed",
-                action: (
-                  <ToastAction
-                    altText="Undo"
-                    onClick={handleTaskComplete.bind(null, false)}
-                  >
-                    Undo
-                  </ToastAction>
-                ),
-              });
+              if (!task.completed) {
+                toast({
+                  title: "1 task completed",
+                  action: (
+                    <ToastAction
+                      altText="Undo"
+                      onClick={handleTaskComplete.bind(null, false)}
+                    >
+                      Undo
+                    </ToastAction>
+                  ),
+                });
+              }
             }}
           >
             <CheckIcon
