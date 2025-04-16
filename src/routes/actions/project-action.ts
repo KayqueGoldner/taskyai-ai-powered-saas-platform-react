@@ -8,6 +8,7 @@ import { redirect } from "react-router";
  */
 import { databases } from "@/lib/appwrite";
 import { generateID, getUserId } from "@/lib/utils";
+import generateProjectTasks from "@/api/google-ai";
 
 /**
  * environment variables
@@ -42,6 +43,9 @@ const createProject = async (data: ProjectForm) => {
   } catch (error) {
     console.log("Error creating project", error);
   }
+
+  const tasks = await generateProjectTasks(taskGenPrompt);
+  console.log(tasks);
 
   return redirect(`/app/projects/${project?.$id}`);
 };
