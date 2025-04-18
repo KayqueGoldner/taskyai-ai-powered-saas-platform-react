@@ -14,6 +14,7 @@ import { InboxPage } from "@/pages/inbox-page";
 import { TodayTaskPage } from "@/pages/today-task-page";
 import { UpcomingTaskPage } from "@/pages/upcoming-task-page";
 import { CompletedTaskPage } from "@/pages/completed-task-page";
+import { ProjectsPage } from "@/pages/projects-page";
 
 /**
  * layouts
@@ -39,6 +40,7 @@ import inboxTaskLoader from "@/routes/loaders/inbox-loader";
 import todayTaskLoader from "@/routes/loaders/today-task-loader";
 import upcomingTaskLoader from "@/routes/loaders/upcoming-task-loader";
 import completedTaskLoader from "@/routes/loaders/completed-task-loader";
+import projectsLoader from "@/routes/loaders/projects-loader";
 
 /**
  * types
@@ -87,7 +89,9 @@ const appRouteChildren: RouteObject[] = [
   },
   {
     path: "projects",
+    element: <ProjectsPage />,
     action: projectAction,
+    loader: projectsLoader,
   },
 ];
 
