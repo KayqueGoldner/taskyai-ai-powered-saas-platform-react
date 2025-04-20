@@ -21,7 +21,7 @@ const APPWRITE_TASKS_ID = import.meta.env.VITE_APPWRITE_TASKS_ID;
  * types
  */
 import type { ActionFunction } from "react-router";
-import type { ProjectForm } from "@/types";
+import type { Project, ProjectForm } from "@/types";
 import type { Models } from "appwrite";
 type AiGenTask = {
   content: string;
@@ -89,12 +89,34 @@ const createProject = async (data: ProjectForm) => {
   return redirect(`/app/projects/${project?.$id}`);
 };
 
+const deleteProject = async (data: Project) => {
+  const documentId = data.id;
+
+  if (!documentId) {
+    throw new Error("Project ID is required");
+  }
+
+  try {
+    await databases.deleteDocument(
+      APPWRITE_DATABASE_ID,
+      APPWRITE_PROJECTS_ID,
+      documentId,
+    );
+  } catch (error) {
+    console.log("Error deleting project", error);
+  }
+};
+
 const projectAction: ActionFunction = async ({ request }) => {
   const method = request.method;
   const data = (await request.json()) as ProjectForm;
 
   if (method === "POST") {
     return await createProject(data);
+  }
+
+  if (method === "DELETE") {
+    return await deleteProject(data);
   }
 
   return null;

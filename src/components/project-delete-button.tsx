@@ -47,16 +47,38 @@ export const ProjectDeleteButton: React.FC<ProjectDeleteButtonProps> = ({
   defaultFormData,
 }) => {
   const fetcher = useFetcher();
+  const { toast } = useToast();
 
   const handleProjectDelete = useCallback(async () => {
+    const { id, update } = toast({
+      title: "Deleting project...",
+      description: "Please wait while we delete the project.",
+      duration: Infinity,
+    });
+
     try {
       await fetcher.submit(defaultFormData, {
         action: "/app/projects",
         method: "DELETE",
         encType: "application/json",
       });
+
+      update({
+        id,
+        title: "Project deleted",
+        description: `The ${truncateString(defaultFormData.name, 32)} project has been deleted successfully.`,
+        duration: 5000,
+      });
     } catch (error) {
       console.error("Error deleting project", error);
+
+      update({
+        id,
+        title: "Error deleting project",
+        description: "An error occurred while deleting the project.",
+        duration: 5000,
+        variant: "destructive",
+      });
     }
   }, [defaultFormData]);
 
