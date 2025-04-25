@@ -19,6 +19,7 @@ import {
   SidebarGroupAction,
   SidebarGroupLabel,
   SidebarFooter,
+  SidebarMenuAction,
 } from "@/components/ui/sidebar";
 import { Logo } from "@/components/logo";
 import { UserButton } from "@clerk/clerk-react";
@@ -34,11 +35,13 @@ import {
 } from "@/components/ui/tooltip";
 import { TaskFormDialog } from "@/components/task-form-dialog";
 import { ProjectFormDialog } from "@/components/project-form-dialog";
+import { ProjectActionMenu } from "@/components/project-action-menu";
 
 /**
  * hooks
  */
 import { useSidebar } from "@/components/ui/sidebar";
+import { useProjects } from "@/contexts/project-context";
 
 /**
  * constants
@@ -48,11 +51,18 @@ import { SIDEBAR_LINKS } from "@/constants";
 /**
  * assets
  */
-import { CirclePlus, Plus, ChevronRight } from "lucide-react";
+import {
+  CirclePlus,
+  Plus,
+  ChevronRight,
+  HashIcon,
+  MoreHorizontalIcon,
+} from "lucide-react";
 
 export const AppSidebar = () => {
   const location = useLocation();
   const { isMobile, setOpenMobile } = useSidebar();
+  const projects = useProjects();
 
   return (
     <Sidebar>
@@ -125,11 +135,71 @@ export const AppSidebar = () => {
             <CollapsibleContent>
               <SidebarGroupContent>
                 <SidebarMenu>
-                  <SidebarMenuItem>
-                    <p className="p-2 text-sm text-muted-foreground">
-                      Click + to add a project
-                    </p>
-                  </SidebarMenuItem>
+                  {projects?.documents
+                    .slice(0, 5)
+                    .map(({ $id, name, color_name, color_hex }) => (
+                      <SidebarMenuItem key={$id}>
+                        <SidebarMenuButton
+                          isActive={
+                            location.pathname === `/app/projects/${$id}`
+                          }
+                          onClick={() => {
+                            if (isMobile) setOpenMobile(false);
+                          }}
+                          asChild
+                        >
+                          <Link to={`/app/projects/${$id}`}>
+                            <HashIcon color={color_hex} />
+                            <span>{name}</span>
+                          </Link>
+                        </SidebarMenuButton>
+
+                        <ProjectActionMenu
+                          defaultFormData={{
+                            id: $id,
+                            name,
+                            color_name,
+                            color_hex,
+                          }}
+                          side="right"
+                          align="start"
+                          sideOffset={16}
+                        >
+                          <SidebarMenuAction
+                            aria-label="Project actions"
+                            className="bg-sidebar-accent"
+                            showOnHover
+                          >
+                            <MoreHorizontalIcon />
+                          </SidebarMenuAction>
+                        </ProjectActionMenu>
+                      </SidebarMenuItem>
+                    ))}
+
+                  {projects !== null && projects.total > 5 && (
+                    <SidebarMenuItem>
+                      <SidebarMenuButton
+                        className="text-muted-foreground"
+                        isActive={location.pathname === "/app/projects"}
+                        onClick={() => {
+                          if (isMobile) setOpenMobile(false);
+                        }}
+                        asChild
+                      >
+                        <Link to="/app/projects">
+                          <MoreHorizontalIcon /> All projects
+                        </Link>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  )}
+
+                  {!projects?.total && (
+                    <SidebarMenuItem>
+                      <p className="p-2 text-sm text-muted-foreground">
+                        Click + to add a project
+                      </p>
+                    </SidebarMenuItem>
+                  )}
                 </SidebarMenu>
               </SidebarGroupContent>
             </CollapsibleContent>

@@ -43,6 +43,7 @@ import upcomingTaskLoader from "@/routes/loaders/upcoming-task-loader";
 import completedTaskLoader from "@/routes/loaders/completed-task-loader";
 import projectsLoader from "@/routes/loaders/projects-loader";
 import projectDetailLoader from "@/routes/loaders/project-detail-loader";
+import appLoader from "@/routes/loaders/app-loader";
 
 /**
  * types
@@ -114,6 +115,7 @@ const router = createBrowserRouter([
     element: <AppLayout />,
     children: appRouteChildren,
     action: appAction,
+    loader: appLoader,
   },
 ]);
 

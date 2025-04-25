@@ -38,6 +38,11 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 /**
+ * hooks
+ */
+import { useProjects } from "@/contexts/project-context";
+
+/**
  * assets
  */
 import {
@@ -47,6 +52,7 @@ import {
   ChevronDownIcon,
   HashIcon,
   SendHorizonalIcon,
+  CheckIcon,
 } from "lucide-react";
 
 /**
@@ -54,6 +60,7 @@ import {
  */
 import type { ClassValue } from "clsx";
 import type { TaskForm as TaskFormType } from "@/types";
+import type { Models } from "appwrite";
 
 type TaskFormProps = {
   defaultFormData?: TaskFormType;
@@ -76,6 +83,8 @@ export const TaskForm: React.FC<TaskFormProps> = ({
   onCancel,
   onSubmit,
 }) => {
+  const projects = useProjects();
+
   const [taskContent, setTaskContent] = useState(defaultFormData.content);
   const [dueDate, setDueDate] = useState(defaultFormData.due_date);
   const [project, setProject] = useState(defaultFormData.project);
@@ -87,6 +96,17 @@ export const TaskForm: React.FC<TaskFormProps> = ({
   const [projectOpen, setProjectOpen] = useState(false);
 
   const [formData, setFormData] = useState(defaultFormData);
+
+  useEffect(() => {
+    if (project) {
+      const { name, color_hex } = projects?.documents.find(
+        ({ $id }) => $id === project,
+      ) as Models.Document;
+
+      setProjectName(name);
+      setProjectColorHex(color_hex);
+    }
+  }, [projects, project]);
 
   useEffect(() => {
     setFormData((prev) => ({
@@ -188,7 +208,13 @@ export const TaskForm: React.FC<TaskFormProps> = ({
               aria-expanded={projectOpen}
               className="max-w-max"
             >
-              <InboxIcon /> Inbox <ChevronDownIcon />
+              {projectName ? (
+                <HashIcon color={projectColorHex} />
+              ) : (
+                <InboxIcon />
+              )}
+              <span className="truncate">{projectName || "Inbox"}</span>
+              <ChevronDownIcon />
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-[240px] p-0" align="start">
@@ -198,54 +224,25 @@ export const TaskForm: React.FC<TaskFormProps> = ({
                 <ScrollArea>
                   <CommandEmpty>No project found.</CommandEmpty>
                   <CommandGroup>
-                    <CommandItem>
-                      <HashIcon /> Projects 1
-                    </CommandItem>
-                    <CommandItem>
-                      <HashIcon /> Projects 2
-                    </CommandItem>
-                    <CommandItem>
-                      <HashIcon /> Projects 3
-                    </CommandItem>
-                    <CommandItem>
-                      <HashIcon /> Projects 4
-                    </CommandItem>
-                    <CommandItem>
-                      <HashIcon /> Projects 5
-                    </CommandItem>
-                    <CommandItem>
-                      <HashIcon /> Projects 6
-                    </CommandItem>
-                    <CommandItem>
-                      <HashIcon /> Projects 7
-                    </CommandItem>
-                    <CommandItem>
-                      <HashIcon /> Projects 8
-                    </CommandItem>
-                    <CommandItem>
-                      <HashIcon /> Projects 9
-                    </CommandItem>
-                    <CommandItem>
-                      <HashIcon /> Projects 10
-                    </CommandItem>
-                    <CommandItem>
-                      <HashIcon /> Projects 11
-                    </CommandItem>
-                    <CommandItem>
-                      <HashIcon /> Projects 12
-                    </CommandItem>
-                    <CommandItem>
-                      <HashIcon /> Projects 13
-                    </CommandItem>
-                    <CommandItem>
-                      <HashIcon /> Projects 14
-                    </CommandItem>
-                    <CommandItem>
-                      <HashIcon /> Projects 15
-                    </CommandItem>
-                    <CommandItem>
-                      <HashIcon /> Projects 16
-                    </CommandItem>
+                    {projects?.documents.map(({ $id, name, color_hex }) => (
+                      <CommandItem
+                        key={$id}
+                        onSelect={(value) => {
+                          setProjectName(value === projectName ? "" : name);
+                          setProject(value === projectName ? null : $id);
+                          setProjectColorHex(
+                            value === projectName ? undefined : color_hex,
+                          );
+                          setProjectOpen(false);
+                        }}
+                      >
+                        <HashIcon color={color_hex} />
+                        {name}
+                        {projectName === name && (
+                          <CheckIcon className="ms-auto" />
+                        )}
+                      </CommandItem>
+                    ))}
                   </CommandGroup>
                 </ScrollArea>
               </CommandList>

@@ -48,8 +48,15 @@ export const ProjectDeleteButton: React.FC<ProjectDeleteButtonProps> = ({
 }) => {
   const fetcher = useFetcher();
   const { toast } = useToast();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const handleProjectDelete = useCallback(async () => {
+    // navigate to the inbox page
+    if (location.pathname === `/app/projects/${defaultFormData.id}`) {
+      navigate("/app/inbox");
+    }
+
     const { id, update } = toast({
       title: "Deleting project...",
       description: "Please wait while we delete the project.",
