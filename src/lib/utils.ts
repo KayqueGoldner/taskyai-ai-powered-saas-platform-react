@@ -37,6 +37,7 @@ export function formatCustomDate(date: string | number | Date) {
     "Sunday",
     "Monday",
     "Tuesday",
+    "Wednesday",
     "Thursday",
     "Friday",
   ];

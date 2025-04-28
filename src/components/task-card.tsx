@@ -179,7 +179,7 @@ export const TaskCard: React.FC<TaskCardProps> = ({
                     </div>
 
                     {task.project ? (
-                      <HashIcon size={14} />
+                      <HashIcon size={14} color={task.project.color_hex} />
                     ) : (
                       <InboxIcon size={14} className="text-muted-foreground" />
                     )}
