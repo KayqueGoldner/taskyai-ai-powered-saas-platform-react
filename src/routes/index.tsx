@@ -27,6 +27,7 @@ import { AppLayout } from "@/layouts/app-layout";
  * error boundaries
  */
 import { RootErrorBoundary } from "@/pages/root-error-boundary";
+import { ProjectErrorBoundary } from "@/pages/project-error-boundary";
 
 /**
  * actions
@@ -100,6 +101,7 @@ const appRouteChildren: RouteObject[] = [
     path: "projects/:projectId",
     element: <ProjectDetailPage />,
     loader: projectDetailLoader,
+    errorElement: <ProjectErrorBoundary />,
   },
 ];
 
