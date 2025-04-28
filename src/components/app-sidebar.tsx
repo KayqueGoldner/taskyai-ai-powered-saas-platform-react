@@ -1,7 +1,7 @@
 /**
  * node modules
  */
-import { Link, useLocation } from "react-router";
+import { Link, useLoaderData, useLocation } from "react-router";
 
 /**
  * components
@@ -59,10 +59,16 @@ import {
   MoreHorizontalIcon,
 } from "lucide-react";
 
+/**
+ * types
+ */
+import type { AppLoaderData } from "@/routes/loaders/app-loader";
+
 export const AppSidebar = () => {
   const location = useLocation();
   const { isMobile, setOpenMobile } = useSidebar();
   const projects = useProjects();
+  const { taskCount } = useLoaderData() as AppLoaderData;
 
   return (
     <Sidebar>
@@ -101,7 +107,14 @@ export const AppSidebar = () => {
                       <span>{link.label}</span>
                     </Link>
                   </SidebarMenuButton>
-                  <SidebarMenuBadge>0</SidebarMenuBadge>
+
+                  {link.href === "/app/inbox" && !!taskCount.inboxTasks && (
+                    <SidebarMenuBadge>{taskCount.inboxTasks}</SidebarMenuBadge>
+                  )}
+
+                  {link.href === "/app/today" && !!taskCount.todayTasks && (
+                    <SidebarMenuBadge>{taskCount.todayTasks}</SidebarMenuBadge>
+                  )}
                 </SidebarMenuItem>
               ))}
             </SidebarMenu>
